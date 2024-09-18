@@ -1,5 +1,13 @@
-#include <stdio.h>
+/*--------------------------------------------------------*
+* Disciplina: Programaçao Estruturada e Modular *
+*          Prof. Carlos Veríssimo                        *
+*--------------------------------------------------------*
+* Objetivo do Programa: Criar um tabuleiro de xadrez em C *
+* Data - 29/08/2024                                       * 
+* Autores: Caio Yugo Saeda Uemura                         *
+*--------------------------------------------------------*/
 
+#include <stdio.h>
 #include <stdio.h>
 
 #define TAMANHO 8
