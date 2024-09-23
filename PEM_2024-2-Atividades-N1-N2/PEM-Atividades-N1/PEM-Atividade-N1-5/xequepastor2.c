@@ -64,4 +64,64 @@ void imprimirTabuleiro(char tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO][4]) 
 }
 
 // Função para movimentar uma peça no tabuleiro
-void moverPeca(char tabuleiro[TAMANHO_TABULEIRO][
+void moverPeca(char tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO][4], int origemX, int origemY, int destinoX, int destinoY) {
+    strcpy(tabuleiro[destinoX][destinoY], tabuleiro[origemX][origemY]);
+    strcpy(tabuleiro[origemX][origemY], "...");
+}
+
+// Função para pausar a execução até o usuário pressionar Enter
+void esperarProximoMovimento() {
+    printf("\nPressione Enter para continuar...");
+    getchar();
+}
+
+// Função principal que controla a execução dos lances do Xeque Pastor
+void xequePastor() {
+    char tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO][4];
+
+    // Inicializar o tabuleiro
+    inicializarTabuleiro(tabuleiro);
+
+    // Imprimir o tabuleiro inicial
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 1: Brancas jogam Peão do Rei (e2 -> e4)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 1, 4, 3, 4); // Peão branco do Rei
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 1: Pretas jogam Peão do Rei (e7 -> e5)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 6, 4, 4, 4); // Peão preto do Rei
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 2: Brancas jogam Bispo (f1 -> c4)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 0, 5, 3, 2); // Bispo branco
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 2: Pretas jogam Cavalo (b8 -> c6)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 7, 1, 5, 2); // Cavalo preto
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 3: Brancas jogam Dama (d1 -> h5)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 0, 3, 4, 7); // Dama branca
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 3: Pretas jogam Cavalo (g8 -> f6)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 7, 6, 5, 5); // Cavalo preto
+    imprimirTabuleiro(tabuleiro);
+
+    // Jogada 4: Brancas jogam Dama e dão Xeque Mate (Dh5 -> f7)
+    esperarProximoMovimento();
+    moverPeca(tabuleiro, 4, 7, 5, 4); // Dama branca capturando o peão e xeque mate
+    imprimirTabuleiro(tabuleiro);
+}
+
+int main() {
+    xequePastor();
+    return 0;
+}

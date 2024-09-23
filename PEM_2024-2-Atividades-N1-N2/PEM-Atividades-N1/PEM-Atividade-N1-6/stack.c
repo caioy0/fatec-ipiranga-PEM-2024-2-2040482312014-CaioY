@@ -3,13 +3,13 @@
 #include <string.h>
 #include <ctype.h>
 
-#define SIZE 4
+#define TAMANHO_STACK 4
 
-int stack[SIZE];
+int stack[TAMANHO_STACK] = {0, 0, 0, 0};
 int top = -1;
 
 void push(int value) {
-    if (top == SIZE - 1) {
+    if (top == TAMANHO_STACK - 1) {
         printf("\nOverflow!!\n");
     } else {
         stack[++top] = value;
@@ -86,7 +86,7 @@ int main() {
 
     do {
         printf("Digite a expressão RPN (max 4 operandos seguidos de um operador): ");
-        fgets(input, sizeof(input), stdin);
+        fgets(input, TAMANHO_STACKof(input), stdin);
         input[strcspn(input, "\n")] = 0; // Remove a nova linha
 
         if (!validateInput(input)) {
