@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#include <string.h>
+#include <ctype.h> 
+
+#define TAMANHO_PILHA 4 
+
+int stack[TAMANHO_PILHA], top = -1;
+
+void push(int value) { 
+    stack[++top] = value; 
+    }
+
+int pop() {
+    return stack[top--]; 
+}
+
+int isOperator(char c) {
+    return c == '+' || c == '-' || c == '*' || c == '/'; 
+}
+
+int calculate(int a, int b, char op) { 
+    if (op == '/' && b == 0) { 
+    printf("Erro: Divisão por zero!\n"); 
+    return 0; 
+    }
+    return op == '+' ? a + b : op == '-' ? a - b : op == '*' ? a * b : a / b; 
+}
+
+int validateRPN(char *input) { 
+    int contarNumeros = 0; 
+    for (int i = 0; input[i]; i++) { 
+        if (isdigit(input[i])) 
+        contarNumeros++; 
+        
+        else if (isOperator(input[i]) && --contarNumeros < 1) 
+        return 0; 
+    }
+    return contarNumeros == 1;
+}
+
+void processRPN(char *input) { 
+    for ( 
+    char *token = strtok(input, " "); 
+    token; token = strtok(NULL, " ")) { 
+        isdigit(token[0]) ? push(atoi(token)) : 
+        push(calculate(pop(), pop(), token[0]));  
+    }
+    printf("Resultado: %d\n", stack[top]); 
+}
+
+int main() { 
+    char input[100]; int continuar;
+    do {
+        printf("Digite a expressão RPN (max 4 operandos): ");
+        fgets(input, sizeof(input), stdin); // 
+        input[strcspn(input, "\n")] = 0; 
+        if (!validateRPN(input)) printf("Entrada inválida! Verifique a expressão.\n");
+        else processRPN(input); 
+        printf("Deseja fazer nova entrada? (1 - Sim, 0 - Não): "); 
+        scanf("%d", &continuar);
+        getchar(); 
+    } while (continuar);
+    return 0;
+}

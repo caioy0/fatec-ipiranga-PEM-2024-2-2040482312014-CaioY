@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h> //atoi (ASCII to Integer) para converter uma string (um array de caracteres)
+#include <string.h>
+#include <ctype.h> //para isdigit(): utilizada para verificar se um caractere é um dígito numérico.
+
+#define TAMANHO_PILHA 4 // Memoria da hp12c == x, y, z, t
+
+int stack[TAMANHO_PILHA], top = -1;
+
+void push(int value) { //adicionar um elemento no topo da pilha
+    stack[++top] = value; 
+    }
+
+int pop() { //remove e retorna o elemento do topo da pilha
+    return stack[top--]; 
+}
+
+int isOperator(char c) { //verifica entrada na linha de operacao
+    return c == '+' || c == '-' || c == '*' || c == '/'; 
+}
+/*
+Operador lógico || (ou)
+return:
+Se o caractere c for um desses operadores, a função retorna 1 (verdadeiro).
+Se não for nenhum desses operadores, a função retorna 0 (falso).
+*/
+
+int calculate(int a, int b, char op) { //Calcular
+    if (op == '/' && b == 0) { 
+    printf("Erro: Divisão por zero!\n"); //erro ao realizar divisao por 0
+    return 0; 
+    }
+    return op == '+' ? a + b : op == '-' ? a - b : op == '*' ? a * b : a / b; //logica para calcular
+}
+
+int validateRPN(char *input) { //Valida uma expressão em Notação Polonesa Reversa (RPN).
+    int contarNumeros = 0; //inicializacao de variavel
+    for (int i = 0; input[i]; i++) { //loop para verificar numeros 
+        if (isdigit(input[i])) 
+        contarNumeros++; 
+        
+        else if (isOperator(input[i]) && --contarNumeros < 1) 
+        return 0; 
+    }
+    return contarNumeros == 1;
+}
+/*
+A função percorre a string de entrada:
+Incrementa o contador de operandos para cada número encontrado.
+Decrementa o contador ao encontrar um operador, pois consome dois operandos.
+Retorna 1 se a expressão for válida.
+Retorna 0 se houver um número incorreto de operandos ou operadores.
+*/
+
+void processRPN(char *input) { //processar uma expressao RPN
+    for ( //loop para processar cada token na entrada
+    char *token = strtok(input, " "); //divide a string de entrada em tokens usando espaço como delimitador
+    token; token = strtok(NULL, " ")) { //loop continua enquanto token não for nulo
+        isdigit(token[0]) ? push(atoi(token)) : //se o token for um dígito converte para inteiro e empilha
+        push(calculate(pop(), pop(), token[0]));  //se nao desempilha os dois últimos operandos, calcula e empilha o resultado
+    }
+    printf("Resultado: %d\n", stack[top]); //MOSTRAR RESULTADO
+}
+/*
+for (char *token = strtok(input, " "); token; token = strtok(NULL, " ")) {
+Loop for que usa strtok para dividir a string de entrada em "tokens", sao partes separadas por espaços.
+O primeiro argumento de strtok é a string original, e o segundo argumento é o delimitador (um espaço " ").
+O primeiro token é atribuído à variável token. O loop continuará enquanto token não for nulo (enquanto houver tokens para processar).
+
+isdigit(token[0]) ? push(atoi(token)) : push(calculate(pop(), pop(), token[0]));
+
+Esta linha usa o operador ternário para decidir o que fazer com o token atual:
+Se o primeiro caractere do token (token[0]) for um dígito (verificado pela função isdigit), ele converte o token em um inteiro usando atoi(token) e chama push para empilhá-lo.
+Se não for um dígito (ou seja, é um operador), ele desempilha os dois últimos operandos com pop(), realiza a operação com a função calculate, 
+passando os dois operandos e o operador (token[0]), e empilha o resultado de volta na pilha.
+*/
+
+int main() { //metodo main
+    char input[100]; int continuar;
+    do {
+        printf("Digite a expressão RPN (max 4 operandos): ");
+        fgets(input, sizeof(input), stdin); // 
+        input[strcspn(input, "\n")] = 0; //Remove a nova linha, ela retorna a posição do primeiro caractere na string que está presente em um conjunto de caracteres definidos
+        if (!validateRPN(input)) printf("Entrada inválida! Verifique a expressão.\n");
+        else processRPN(input); 
+        printf("Deseja fazer nova entrada? (1 - Sim, 0 - Não): "); 
+        scanf("%d", &continuar);
+        getchar(); // Limpa o buffer
+    } while (continuar);
+    return 0;
+}
+
+/*
+fgets(input, sizeof(input), stdin); 
+é uma chamada à função fgets e serve para ler uma linha de texto da entrada padrão (normalmente o teclado) e armazená-la na variável input.
+
+fgets:
+É uma função da biblioteca padrão de C que lê uma linha de texto.
+A função lê até um caractere de nova linha (\n) ou até atingir o número máximo de caracteres especificado, garantindo que não ocorra um estouro de buffer.
+
+input:
+Este é um ponteiro para um array de caracteres (ou string) onde a linha lida será armazenada. 
+O array deve ter espaço suficiente para armazenar a linha, incluindo o caractere nulo de terminação (\0).
+
+sizeof(input):
+Esta expressão retorna o tamanho em bytes do array input.
+Assim, sizeof(input) fornece o número máximo de caracteres que podem ser lidos, garantindo que fgets não ultrapasse o tamanho do buffer. 
+Se input for um array declarado como char input[100];, então sizeof(input) retornará 100.
+
+stdin:
+Este é um ponteiro para o fluxo de entrada padrão, que geralmente é o teclado.
+Passar stdin permite que fgets leia a entrada do usuário diretamente do terminal.
+O Que Essa Linha Faz
+Lê a Entrada: A função lê a entrada do usuário até que um caractere de nova linha (\n) seja encontrado, 
+ou até que o número de caracteres lidos alcance o valor especificado por sizeof(input) - 1.
+Armazena na String: A linha lida é armazenada no array input, 
+incluindo o caractere de nova linha (se houver espaço suficiente) e terminando a string com um caractere nulo (\0).
+Segurança: Ao usar sizeof(input), a função evita estouros de buffer, pois lê apenas até o limite do tamanho do array.
+*/
