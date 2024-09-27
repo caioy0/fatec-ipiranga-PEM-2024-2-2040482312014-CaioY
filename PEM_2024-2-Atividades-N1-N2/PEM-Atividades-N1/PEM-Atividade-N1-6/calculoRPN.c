@@ -1,7 +1,7 @@
-#include <stdio.h>     // Biblioteca para entrada e saída padrão
-#include <stdlib.h>    // Biblioteca para funções de alocação de memória e conversões (atoi)
-#include <string.h>    // Biblioteca para manipulação de strings
-#include <ctype.h>     // Biblioteca para funções de verificação de caracteres (isdigit)
+#include <stdio.h>     
+#include <stdlib.h>    // funções de alocação de memória e conversões (atoi)
+#include <string.h>    // manipulação de strings
+#include <ctype.h>     // funções de verificação de caracteres (isdigit)
 
 #define TAMANHO_PILHA 4 // Tamanho da pilha, representando a memória da HP12C (X, Y, Z, T)
 
@@ -23,16 +23,18 @@ int isOperator(char c) {
 }
 //Retorna 1 se c for um operador; 0 caso contrário.
 
-int calculate(int a, int b, char op) { // Função para realizar cálculos
+//função para realizar cálculos
+int calcular(int a, int b, char op) {
     if (op == '/' && b == 0) { 
-        printf("Erro: Divisão por zero!\n"); // Tratamento de erro para divisão por zero
+        printf("Erro: Divisão por zero!\n"); //especialmente -> erro para divisão por zero
         return 0; 
     }
     // Retorna o resultado da operação conforme o operador
     return op == '+' ? a + b : op == '-' ? a - b : op == '*' ? a * b : a / b; 
 }
 
-int validateRPN(char *input) { // Função para validar expressões em RPN
+//função para validar expressões em RPN
+int validarRPN(char *input) { 
     int contarNumeros = 0; // Inicializa contador de números
     for (int i = 0; input[i]; i++) { // Loop para verificar cada caractere
         if (isdigit(input[i])) 
@@ -54,22 +56,22 @@ void processRPN(char *input) { // Função para processar a expressão RPN
          token; token = strtok(NULL, " ")) { // Loop enquanto houver tokens
         // Usa operador ternário para empilhar números ou calcular com operadores
         isdigit(token[0]) ? push(atoi(token)) : 
-        push(calculate(pop(), pop(), token[0]));  
+        push(calcular(pop(), pop(), token[0]));  
     }
     printf("Resultado: %d\n", stack[top]); // Mostra o resultado
 }
-
 //O loop usa strtok para separar a entrada em partes e decide o que fazer com cada token.
 
 int main() { 
     char input[100]; 
     int continuar; //variável de controle do loop
     do {
+        memset(input, 0, sizeof(input)); //Limpar o array inteiro com 0 --> esse aqui muito bom.
         printf("Digite a expressão RPN (max 4 operandos): ");
         fgets(input, sizeof(input), stdin); //lê a linha de entrada
         input[strcspn(input, "\n")] = 0; //remove a nova linha do final
         //validar a entrada 
-        if (!validateRPN(input)) // chama o validateRPN
+        if (!validarRPN(input)) //chama o validarRPN
             printf("Entrada inválida! Verifique a expressão.\n");
         else 
             processRPN(input); //vai ao calculo
@@ -90,6 +92,6 @@ A função strcspn calcula o índice do primeiro caractere em input que coincide
 que neste caso é "\n".
 
 O operador ! é usado para inverter o valor retornado pela função.
-Portanto, se validateRPN(input) retornar 1 (verdadeiro), !validateRPN(input) se tornará 0 (falso).
-E se validateRPN(input) retornar 0 (falso), !validateRPN(input) se tornará 1 (verdadeiro).
+Portanto, se validarRPN(input) retornar 1 (verdadeiro), !validarRPN(input) se tornará 0 (falso).
+E se validarRPN(input) retornar 0 (falso), !validarRPN(input) se tornará 1 (verdadeiro).
 */
