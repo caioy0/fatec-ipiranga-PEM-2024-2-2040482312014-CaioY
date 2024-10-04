@@ -1,3 +1,12 @@
+/*--------------------------------------------------------*
+* Disciplina: Programaçao Estruturada e Modular *
+*          Prof. Carlos Veríssimo                        *
+*--------------------------------------------------------*
+* Objetivo do Programa: Calculadora baseada em formula RPN *
+* Data - 20/09/2024                                       * 
+* Autores: Caio Yugo Saeda Uemura                         *
+*--------------------------------------------------------*/
+
 #include <stdio.h>     
 #include <stdlib.h>    // funções de alocação de memória e conversões (atoi)
 #include <string.h>    // manipulação de strings
@@ -80,6 +89,7 @@ int main() {
         scanf("%d", &continuar); // Lê a resposta do usuário
         getchar(); // Limpa o buffer
     } while (continuar); // Continua enquanto o usuário desejar
+    printf("Obrigado por usar nossa Calculador Fatec-HP12c"); 
     return 0; // Retorna 0 ao final da execução
 }
 

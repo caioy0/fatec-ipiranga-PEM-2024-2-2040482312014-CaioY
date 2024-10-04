@@ -1,0 +1,29 @@
+MELHORIAS!
+
+adicionei uma funcao para inserir os numeors dentro da array:
+int insertNum(int arr[], int size){
+    int i;
+    printf("Digite os numeros: ");
+        for (i=0; i <5; i++){
+        scanf("%d",&arr[i]);
+    }
+}
+
+depois zerei o arr[] para inicializar com base no input dos numeros:
+int arr[] = {5, 3, 8, 4, 2}; --> int arr[] = {0, 0, 0, 0, 0};
+
+adicionei a main, a funcao de adicionar os numeros:
+insertNum(arr, n);
+
+resultado final:
+int main() {
+    int arr[] = {0, 0, 0, 0, 0}; //5, 3, 8, 4, 2
+    int n = sizeof(arr)/sizeof(arr[0]);
+    insertNum(arr, n);
+    printf("Array original: \n");
+    printArray(arr, n);
+    bubbleSort(arr, n);
+    printf("Array ordenado: \n");
+    printArray(arr, n);
+    return 0;
+}
