@@ -15,7 +15,7 @@
 
 typedef struct {
     int idProduto;
-    char nomeProd [50];
+    char nomeProd [50]; 
     char descProduto [100];
     float preco;
     int quantidade;
@@ -28,6 +28,7 @@ Produto SetProduto(int idProduto, char nomeProd [50], char descProduto [100], fl
     strcpy(prod.descProduto, descProduto);
     prod.preco = preco;
     prod.quantidade = quantidade;
+    return prod;
 }
 
 struct carrinhoCompras{
@@ -44,13 +45,41 @@ void imprimeProduto(Produto prod){
     printf("\n*---------------------------------*");
 }
 
-int mostrarCarrinho(){
-    idProduto 
-    return nomeProduto;
+void mostrarCarrinho(){
+    //
 }
 
-void abrirPagamento(){
+void pagarCredito(){
+    //
+}
 
+void pagarDebito(){
+    //
+}
+
+void pagarPix(){
+    //
+}
+
+void abrirPagamento(int metodo){
+    mostrarCarrinho();
+    printf("Qual metodo para o pagamento? \n1-Credito \n2-Debito \n3-Pix");
+    scanf("%d", metodo);
+    switch (metodo) {
+        case 1:
+            pagarCredito();
+            break;
+        case 2:
+            pagarDebito();
+            break;
+        case 3:
+            pagarPix();
+            break;
+        default:
+            printf("Selecione uma opcao valida!");
+            abrirPagamento(metodo);
+            break;
+    }
 }
 
 void bubbleSort(int arr[], int n) {
@@ -72,27 +101,23 @@ int main() {
     printf("Seja bem vindo ao mercadao virtual! \n");
     while (true){
         printf("Menu de opcoes \n1- Acessar lista de compras \n2-Acessar lista de compras \n3-Pagar \n4-Cancelar e sair");
-        getchar (x);
+        scanf("%d",x);
         switch (x)
         {
         case 1:
-            imprimeProduto(); // Imprime todos os produtos
-            if (deseja mais alguma coisa?)
-                printf("\nEscolha qual produto voce deseja: ")
-                getchar();
-            else:
+            imprimeProduto(p1); // Imprime todos os produtos
             break;
         case 2:
            mostrarCarrinho(); 
         case 3:
-            abrirPagamento():
+            abrirPagamento(0);
         case 4:
-            break;
+            printf("Obrigado por visitar o mercado!");
+            return 0;
         default:
             printf("Escolha invalida");
             break;
         }
     }
-    printf("Obrigado por visitar o mercado!");
     return 0;
 }
