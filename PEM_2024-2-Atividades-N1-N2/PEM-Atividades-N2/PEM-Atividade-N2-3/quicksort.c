@@ -53,7 +53,7 @@ void quickSort(int arr[], int limInf, int limSup) {
 // Função para imprimir o array
 void printArray(int arr[], int n) {
     for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+        printf("MEM: 0x%X, arr[%d] : %d\n", (unsigned int)(int *)&arr[i], i, arr[i]);
     }
     printf("\n");
 }
