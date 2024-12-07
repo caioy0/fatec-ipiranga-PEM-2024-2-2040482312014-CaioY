@@ -3,7 +3,7 @@
 *          Prof. Carlos Veríssimo                         *
 *-------------------------------------------------------- *
 * Objetivo do Programa: Struct e bubbleSort               *
-* Data - 18/10/2024                                       * 
+* Data - 18/10/2024                                       *
 * Autores: Caio Yugo Saeda Uemura                         *
 *--------------------------------------------------------*/
 #include <stdio.h>
